@@ -150,6 +150,16 @@
       box-shadow: var(--shadow);
     }
 
+    .shortcut-card {
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .shortcut-card:active {
+      transform: scale(0.99);
+      border-color: var(--green);
+    }
+
     .card h2 {
       margin: 0 0 12px;
       font-size: 21px;
@@ -170,8 +180,9 @@
       line-height: 1.4;
     }
 
-    .grid-3 {
+    .grid-4 {
       display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
 
@@ -180,6 +191,10 @@
       border: 1px solid var(--line);
       border-radius: 18px;
       background: var(--card-soft);
+    }
+
+    .stat.shortcut-card {
+      box-shadow: none;
     }
 
     .stat-number {
@@ -196,6 +211,16 @@
       color: var(--muted);
       font-size: 13px;
       font-weight: 800;
+    }
+
+    .stat-title {
+      display: block;
+      margin-top: 8px;
+      color: var(--ink);
+      font-size: 17px;
+      line-height: 1.05;
+      font-weight: 950;
+      letter-spacing: -0.03em;
     }
 
     .list {
@@ -353,9 +378,16 @@
       line-height: 1.4;
     }
 
+    .tap-hint {
+      margin: 10px 0 0;
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
     @media (min-width: 640px) {
-      .grid-3 {
-        grid-template-columns: repeat(3, 1fr);
+      .grid-4 {
+        grid-template-columns: repeat(4, 1fr);
       }
 
       .form.two {
@@ -375,7 +407,8 @@
       .tabs,
       .form-card,
       .bottom-actions,
-      .btn {
+      .btn,
+      .tap-hint {
         display: none !important;
       }
 
@@ -412,46 +445,68 @@
       <button class="tab active" data-tab="today">Today</button>
       <button class="tab" data-tab="mobs">Mobs</button>
       <button class="tab" data-tab="paddocks">Paddocks</button>
-      <button class="tab" data-tab="jobs">Jobs</button>
       <button class="tab" data-tab="move">Move</button>
+      <button class="tab" data-tab="jobs">Jobs</button>
     </nav>
 
     <section id="today" class="panel active">
       <div class="card">
         <h2>Today’s board</h2>
-        <div class="grid-3">
-          <div class="stat">
-            <span id="statMobs" class="stat-number">0</span>
-            <span class="stat-label">mobs</span>
+        <p class="section-note">Tap a bucket to open the working page.</p>
+
+        <div class="grid-4">
+          <div class="stat shortcut-card" data-open-tab="mobs">
+            <span id="statMobsJtd" class="stat-number">0</span>
+            <span class="stat-label">JTD</span>
+            <span class="stat-title">Mobs</span>
           </div>
 
-          <div class="stat">
-            <span id="statHardFed" class="stat-number">0</span>
-            <span class="stat-label">hard fed</span>
+          <div class="stat shortcut-card" data-open-tab="paddocks">
+            <span id="statPaddocksJtd" class="stat-number">0</span>
+            <span class="stat-label">JTD</span>
+            <span class="stat-title">Paddocks</span>
           </div>
 
-          <div class="stat">
-            <span id="statOpenJobs" class="stat-number">0</span>
-            <span class="stat-label">open jobs</span>
+          <div class="stat shortcut-card" data-open-tab="move">
+            <span id="statMoveJtd" class="stat-number">0</span>
+            <span class="stat-label">JTD</span>
+            <span class="stat-title">Move</span>
+          </div>
+
+          <div class="stat shortcut-card" data-open-tab="jobs">
+            <span id="statJobsJtd" class="stat-number">0</span>
+            <span class="stat-label">JTD</span>
+            <span class="stat-title">Jobs</span>
           </div>
         </div>
       </div>
 
-      <div class="card">
-        <h2>Jobs to do</h2>
-        <p class="section-note">Whole-farm, paddock, and mob jobs that are still open.</p>
-        <div id="todayJobs" class="list"></div>
-      </div>
-
-      <div class="card">
-        <h2>Mob watch</h2>
-        <p class="section-note">Mobs being hard fed or with a next paddock set.</p>
+      <div class="card shortcut-card" data-open-tab="mobs">
+        <h2>Mobs</h2>
+        <p class="section-note">Current mob position, stock numbers, feed, and next paddock.</p>
         <div id="todayMobs" class="list"></div>
+        <p class="tap-hint">Tap to open Mobs</p>
       </div>
 
-      <div class="card">
-        <h2>Low feed paddocks</h2>
+      <div class="card shortcut-card" data-open-tab="paddocks">
+        <h2>Paddocks</h2>
+        <p class="section-note">All paddocks with feed status and notes.</p>
         <div id="todayPaddocks" class="list"></div>
+        <p class="tap-hint">Tap to open Paddocks</p>
+      </div>
+
+      <div class="card shortcut-card" data-open-tab="move">
+        <h2>Move</h2>
+        <p class="section-note">Recorded stock moves.</p>
+        <div id="todayMoves" class="list"></div>
+        <p class="tap-hint">Tap to open Move</p>
+      </div>
+
+      <div class="card shortcut-card" data-open-tab="jobs">
+        <h2>Jobs</h2>
+        <p class="section-note">All open whole-farm, paddock, and mob jobs.</p>
+        <div id="todayJobs" class="list"></div>
+        <p class="tap-hint">Tap to open Jobs</p>
       </div>
     </section>
 
@@ -699,6 +754,7 @@
 
     const tabs = document.querySelectorAll(".tab");
     const panels = document.querySelectorAll(".panel");
+    const shortcutCards = document.querySelectorAll(".shortcut-card");
 
     const todayDate = document.getElementById("todayDate");
 
@@ -721,15 +777,35 @@
       month: "short"
     });
 
+    function openTab(target) {
+      tabs.forEach((item) => item.classList.remove("active"));
+      panels.forEach((panel) => panel.classList.remove("active"));
+
+      const targetTab = document.querySelector(`.tab[data-tab="${target}"]`);
+      const targetPanel = document.getElementById(target);
+
+      if (!targetTab || !targetPanel) {
+        return;
+      }
+
+      targetTab.classList.add("active");
+      targetPanel.classList.add("active");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
     tabs.forEach((tab) => {
       tab.addEventListener("click", () => {
-        const target = tab.dataset.tab;
+        openTab(tab.dataset.tab);
+      });
+    });
 
-        tabs.forEach((item) => item.classList.remove("active"));
-        panels.forEach((panel) => panel.classList.remove("active"));
-
-        tab.classList.add("active");
-        document.getElementById(target).classList.add("active");
+    shortcutCards.forEach((card) => {
+      card.addEventListener("click", () => {
+        openTab(card.dataset.openTab);
       });
     });
 
@@ -974,7 +1050,6 @@
 
     function render() {
       renderSelects();
-      renderStats();
       renderToday();
       renderPaddocks();
       renderMobs();
@@ -982,31 +1057,77 @@
       renderMoves();
     }
 
-    function renderStats() {
-      const hardFedCount = state.mobs.filter((mob) => mob.hardFed === "Yes").length;
-      const openJobsCount = state.jobs.filter((job) => job.status !== "Done").length;
+    function getOpenJobs() {
+      return state.jobs
+        .filter((job) => job.status !== "Done")
+        .sort((a, b) => priorityRank(b.priority) - priorityRank(a.priority));
+    }
 
-      text("statMobs", state.mobs.length);
-      text("statHardFed", hardFedCount);
-      text("statOpenJobs", openJobsCount);
+    function getTodayMobItems() {
+      return state.mobs.map((mob) => {
+        const attention = [];
+
+        if (mob.hardFed === "Yes") {
+          attention.push(`Hard fed: ${mob.feedType || "Feed"}`);
+        }
+
+        if (mob.nextPaddock && mob.nextPaddock !== "Not set") {
+          attention.push(`Next: ${mob.nextPaddock}`);
+        }
+
+        if (attention.length === 0) {
+          attention.push("On board");
+        }
+
+        return {
+          title: mob.name,
+          detail: `${mob.number} ${mob.type} · Now: ${mob.currentPaddock || "Not set"}`,
+          note: `Last: ${mob.lastPaddock || "Not recorded"} · ${attention.join(" · ")}`,
+          pill: mob.hardFed === "Yes" ? "Feed" : "Mob",
+          pillClass: mob.hardFed === "Yes" ? "feed" : ""
+        };
+      });
+    }
+
+    function getTodayPaddockItems() {
+      return state.paddocks.map((paddock) => {
+        return {
+          title: paddock.name,
+          detail: paddock.note || "No note",
+          note: "",
+          pill: paddock.feed,
+          pillClass: feedClass(paddock.feed)
+        };
+      });
+    }
+
+    function getTodayMoveItems() {
+      return state.moves.map((move) => {
+        return {
+          title: move.mobName,
+          detail: `${move.from} → ${move.to}`,
+          note: move.date,
+          pill: move.reason,
+          pillClass: ""
+        };
+      });
     }
 
     function renderToday() {
-      const openJobs = state.jobs
-        .filter((job) => job.status !== "Done")
-        .sort((a, b) => priorityRank(b.priority) - priorityRank(a.priority));
+      const todayMobItems = getTodayMobItems();
+      const todayPaddockItems = getTodayPaddockItems();
+      const todayMoveItems = getTodayMoveItems();
+      const todayJobItems = getOpenJobs();
 
-      const watchMobs = state.mobs.filter((mob) => {
-        return mob.hardFed === "Yes" || (mob.nextPaddock && mob.nextPaddock !== "Not set");
-      });
+      text("statMobsJtd", todayMobItems.length);
+      text("statPaddocksJtd", todayPaddockItems.length);
+      text("statMoveJtd", todayMoveItems.length);
+      text("statJobsJtd", todayJobItems.length);
 
-      const lowPaddocks = state.paddocks.filter((paddock) => {
-        return paddock.feed === "Low" || paddock.feed === "Bare";
-      });
-
-      renderJobItems("todayJobs", openJobs, true);
-      renderMobItems("todayMobs", watchMobs, true);
-      renderPaddockItems("todayPaddocks", lowPaddocks, true);
+      renderSimpleItems("todayMobs", todayMobItems, "No mobs added yet.");
+      renderSimpleItems("todayPaddocks", todayPaddockItems, "No paddocks added yet.");
+      renderSimpleItems("todayMoves", todayMoveItems, "No moves recorded yet.");
+      renderJobItems("todayJobs", todayJobItems, true);
     }
 
     function renderPaddocks() {
@@ -1039,6 +1160,28 @@
             <span class="pill">${escapeHtml(move.reason)}</span>
           </div>
           <div class="meta">${escapeHtml(move.date)}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderSimpleItems(targetId, items, emptyMessage) {
+      const target = document.getElementById(targetId);
+
+      if (items.length === 0) {
+        target.innerHTML = empty(emptyMessage);
+        return;
+      }
+
+      target.innerHTML = items.map((item) => `
+        <div class="item">
+          <div class="item-head">
+            <div>
+              <div class="item-title">${escapeHtml(item.title)}</div>
+              <div class="meta">${escapeHtml(item.detail)}</div>
+            </div>
+            <span class="pill ${escapeHtml(item.pillClass)}">${escapeHtml(item.pill)}</span>
+          </div>
+          ${item.note ? `<div class="meta">${escapeHtml(item.note)}</div>` : ""}
         </div>
       `).join("");
     }
@@ -1094,7 +1237,7 @@
       const target = document.getElementById(targetId);
 
       if (jobs.length === 0) {
-        target.innerHTML = empty(compact ? "No open jobs. Dangerous luxury." : "No jobs added yet.");
+        target.innerHTML = empty(compact ? "No open jobs showing." : "No jobs added yet.");
         return;
       }
 
