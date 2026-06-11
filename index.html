@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,427 +6,7 @@
 
   <title>Farms JTD</title>
 
-  <style>
-    :root {
-      --bg: #f3efe4;
-      --card: #fffdf7;
-      --card-soft: #f8f3e8;
-      --ink: #1e241d;
-      --muted: #68705f;
-      --line: #ded5c1;
-      --green: #2f6f3e;
-      --green-dark: #214f2c;
-      --gold: #c08a2d;
-      --red: #a64032;
-      --blue: #315f78;
-      --shadow: 0 12px 28px rgba(42, 36, 24, 0.08);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(47, 111, 62, 0.14), transparent 32rem),
-        var(--bg);
-      color: var(--ink);
-    }
-
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .app {
-      max-width: 760px;
-      margin: 0 auto;
-      min-height: 100vh;
-      padding: 16px;
-      padding-bottom: 32px;
-    }
-
-    .hero {
-      padding: 18px 4px 12px;
-    }
-
-    .brand-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .brand-mark {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      border-radius: 15px;
-      background: var(--green);
-      color: white;
-      font-weight: 950;
-      letter-spacing: -0.05em;
-      box-shadow: var(--shadow);
-    }
-
-    .date-pill {
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 8px 11px;
-      background: rgba(255, 253, 247, 0.75);
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 38px;
-      line-height: 1;
-      letter-spacing: -0.06em;
-    }
-
-    .tagline {
-      margin: 8px 0 0;
-      max-width: 36rem;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.4;
-      font-weight: 650;
-    }
-
-    .tabs {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 6px;
-      padding: 10px 0 12px;
-      background: var(--bg);
-    }
-
-    .tab {
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--card-soft);
-      color: var(--ink);
-      padding: 10px 5px;
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .tab.active {
-      background: var(--green);
-      border-color: var(--green);
-      color: white;
-    }
-
-    .panel {
-      display: none;
-    }
-
-    .panel.active {
-      display: block;
-    }
-
-    .card {
-      margin: 0 0 14px;
-      padding: 16px;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: rgba(255, 253, 247, 0.92);
-      box-shadow: var(--shadow);
-    }
-
-    .shortcut-card {
-      cursor: pointer;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-    }
-
-    .shortcut-card:active {
-      transform: scale(0.99);
-      border-color: var(--green);
-    }
-
-    .card h2 {
-      margin: 0 0 12px;
-      font-size: 21px;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-    }
-
-    .card h3 {
-      margin: 0;
-      font-size: 16px;
-      line-height: 1.2;
-    }
-
-    .small {
-      margin: 0 0 12px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.4;
-    }
-
-    .grid-4 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .stat {
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: var(--card-soft);
-    }
-
-    .stat.shortcut-card {
-      box-shadow: none;
-    }
-
-    .stat-number {
-      display: block;
-      font-size: 30px;
-      line-height: 1;
-      font-weight: 950;
-      letter-spacing: -0.06em;
-    }
-
-    .stat-label {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .stat-title {
-      display: block;
-      margin-top: 8px;
-      color: var(--ink);
-      font-size: 17px;
-      line-height: 1.05;
-      font-weight: 950;
-      letter-spacing: -0.03em;
-    }
-
-    .list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .item {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 13px;
-      background: #fffaf0;
-    }
-
-    .item-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .item-title {
-      font-weight: 950;
-      line-height: 1.2;
-    }
-
-    .meta {
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.38;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      padding: 5px 9px;
-      background: #ebe3d1;
-      color: var(--ink);
-      font-size: 12px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .pill.good {
-      background: #dcefdc;
-      color: #21542a;
-    }
-
-    .pill.okay {
-      background: #f2e6c7;
-      color: #77510f;
-    }
-
-    .pill.low,
-    .pill.bare,
-    .pill.urgent {
-      background: #f4d4c8;
-      color: #8a321f;
-    }
-
-    .pill.high {
-      background: #f3e0bc;
-      color: #765014;
-    }
-
-    .pill.done {
-      background: #dcefdc;
-      color: #21542a;
-    }
-
-    .pill.feed {
-      background: #ddebf2;
-      color: #284f64;
-    }
-
-    .form {
-      display: grid;
-      gap: 11px;
-    }
-
-    label {
-      display: grid;
-      gap: 6px;
-      color: var(--ink);
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 15px;
-      background: #fffdf8;
-      color: var(--ink);
-      padding: 12px;
-      outline: none;
-    }
-
-    textarea {
-      min-height: 78px;
-      resize: vertical;
-    }
-
-    .btn {
-      border: 0;
-      border-radius: 15px;
-      padding: 12px 14px;
-      background: var(--green);
-      color: white;
-      font-weight: 950;
-    }
-
-    .btn.secondary {
-      border: 1px solid var(--line);
-      background: var(--card-soft);
-      color: var(--ink);
-    }
-
-    .btn.danger {
-      background: var(--red);
-    }
-
-    .btn.small-btn {
-      padding: 8px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-    }
-
-    .actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 9px;
-      margin-top: 10px;
-    }
-
-    .empty {
-      padding: 14px;
-      border: 1px dashed var(--line);
-      border-radius: 18px;
-      background: rgba(248, 243, 232, 0.75);
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.4;
-    }
-
-    .section-note {
-      margin: -4px 0 12px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.4;
-    }
-
-    .tap-hint {
-      margin: 10px 0 0;
-      color: var(--green-dark);
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    @media (min-width: 640px) {
-      .grid-4 {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .form.two {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .full {
-        grid-column: 1 / -1;
-      }
-    }
-
-    @media print {
-      body {
-        background: white;
-      }
-
-      .tabs,
-      .form-card,
-      .bottom-actions,
-      .btn,
-      .tap-hint {
-        display: none !important;
-      }
-
-      .app {
-        max-width: none;
-        padding: 0;
-      }
-
-      .panel {
-        display: block;
-      }
-
-      .card {
-        box-shadow: none;
-        break-inside: avoid;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
@@ -438,81 +18,101 @@
       </div>
 
       <h1>Farms JTD</h1>
-      <p class="tagline">What’s where. What’s next. What needs doing.</p>
+      <p class="tagline">Map shows the farm. Card shows the live truth.</p>
     </header>
 
     <nav class="tabs" aria-label="Farms JTD sections">
-      <button class="tab active" data-tab="today">Today</button>
+      <button class="tab" data-tab="today">Today</button>
+      <button class="tab active" data-tab="map">Map</button>
       <button class="tab" data-tab="mobs">Mobs</button>
       <button class="tab" data-tab="paddocks">Paddocks</button>
       <button class="tab" data-tab="move">Move</button>
       <button class="tab" data-tab="jobs">Jobs</button>
     </nav>
 
-    <section id="today" class="panel active">
+    <section id="today" class="panel">
       <div class="card">
         <h2>Today’s board</h2>
         <p class="section-note">Tap a bucket to open the working page.</p>
 
         <div class="grid-4">
-          <div class="stat shortcut-card" data-open-tab="mobs">
+          <button class="stat shortcut-card" data-open-tab="mobs" type="button">
             <span id="statMobsJtd" class="stat-number">0</span>
             <span class="stat-label">JTD</span>
             <span class="stat-title">Mobs</span>
-          </div>
+          </button>
 
-          <div class="stat shortcut-card" data-open-tab="paddocks">
+          <button class="stat shortcut-card" data-open-tab="paddocks" type="button">
             <span id="statPaddocksJtd" class="stat-number">0</span>
             <span class="stat-label">JTD</span>
             <span class="stat-title">Paddocks</span>
-          </div>
+          </button>
 
-          <div class="stat shortcut-card" data-open-tab="move">
+          <button class="stat shortcut-card" data-open-tab="move" type="button">
             <span id="statMoveJtd" class="stat-number">0</span>
             <span class="stat-label">JTD</span>
             <span class="stat-title">Move</span>
-          </div>
+          </button>
 
-          <div class="stat shortcut-card" data-open-tab="jobs">
+          <button class="stat shortcut-card" data-open-tab="jobs" type="button">
             <span id="statJobsJtd" class="stat-number">0</span>
             <span class="stat-label">JTD</span>
             <span class="stat-title">Jobs</span>
-          </div>
+          </button>
         </div>
       </div>
 
       <div class="card shortcut-card" data-open-tab="mobs">
         <h2>Mobs</h2>
-        <p class="section-note">Current mob position, stock numbers, feed, and next paddock.</p>
+        <p class="section-note">Current mob position and next pressure points.</p>
         <div id="todayMobs" class="list"></div>
-        <p class="tap-hint">Tap to open Mobs</p>
       </div>
 
       <div class="card shortcut-card" data-open-tab="paddocks">
         <h2>Paddocks</h2>
-        <p class="section-note">All paddocks with feed status and notes.</p>
+        <p class="section-note">Paddocks needing attention, forecast misses, or hard grazing watch.</p>
         <div id="todayPaddocks" class="list"></div>
-        <p class="tap-hint">Tap to open Paddocks</p>
       </div>
 
       <div class="card shortcut-card" data-open-tab="move">
         <h2>Move</h2>
         <p class="section-note">Recorded stock moves.</p>
         <div id="todayMoves" class="list"></div>
-        <p class="tap-hint">Tap to open Move</p>
       </div>
 
       <div class="card shortcut-card" data-open-tab="jobs">
         <h2>Jobs</h2>
         <p class="section-note">All open whole-farm, paddock, and mob jobs.</p>
         <div id="todayJobs" class="list"></div>
-        <p class="tap-hint">Tap to open Jobs</p>
+      </div>
+    </section>
+
+    <section id="map" class="panel active">
+      <div class="card map-card">
+        <h2>Farm map</h2>
+        <p class="section-note">Tap a paddock on the map, then update the live card underneath.</p>
+
+        <div class="map-hero">
+          <img src="farm-map.png" alt="Farms JTD farm paddock map" />
+          <div id="mapHotspots" class="map-hotspots" aria-label="Clickable paddock zones"></div>
+        </div>
+
+        <label class="map-picker">
+          Choose paddock
+          <select id="mapPaddockSelect"></select>
+        </label>
+      </div>
+
+      <div class="card">
+        <h2>Paddock card</h2>
+        <div id="paddockCardPanel"></div>
       </div>
     </section>
 
     <section id="mobs" class="panel">
       <div class="card form-card">
         <h2>Add mob</h2>
+
         <form id="mobForm" class="form two">
           <label>
             Mob name
@@ -594,43 +194,59 @@
     </section>
 
     <section id="paddocks" class="panel">
+      <div class="card">
+        <h2>Paddocks</h2>
+        <p class="section-note">Edit live paddock details through the Map tab.</p>
+        <div id="paddockList" class="list"></div>
+      </div>
+    </section>
+
+    <section id="move" class="panel">
       <div class="card form-card">
-        <h2>Add paddock</h2>
-        <form id="paddockForm" class="form">
+        <h2>Move mob</h2>
+        <p class="small">Select the mob and the new paddock. Farms JTD sets the current paddock as the last paddock.</p>
+
+        <form id="moveForm" class="form">
           <label>
-            Paddock name
-            <input id="paddockName" placeholder="Back Flat, House Block, Creek 3" required />
+            Mob
+            <select id="moveMob" required></select>
           </label>
 
           <label>
-            Feed status
-            <select id="paddockFeed" required>
-              <option>Good</option>
-              <option>Okay</option>
-              <option>Low</option>
-              <option>Bare</option>
-              <option>Shut up / resting</option>
+            New paddock
+            <select id="movePaddock" required></select>
+          </label>
+
+          <label>
+            Reason
+            <select id="moveReason">
+              <option>Feed</option>
+              <option>Rest paddock</option>
+              <option>Water</option>
+              <option>Shade</option>
+              <option>Shelter</option>
+              <option>Animal health</option>
+              <option>Lambing / calving</option>
+              <option>Yard work</option>
+              <option>Break feeding</option>
+              <option>Other</option>
             </select>
           </label>
 
-          <label>
-            Paddock note
-            <textarea id="paddockNote" placeholder="Water issue, wet corner, gate broken, sprayed, keep off"></textarea>
-          </label>
-
-          <button class="btn" type="submit">Add paddock</button>
+          <button class="btn" type="submit">Record move</button>
         </form>
       </div>
 
       <div class="card">
-        <h2>Paddocks</h2>
-        <div id="paddockList" class="list"></div>
+        <h2>Recent moves</h2>
+        <div id="moveList" class="list"></div>
       </div>
     </section>
 
     <section id="jobs" class="panel">
       <div class="card form-card">
         <h2>Add job</h2>
+
         <form id="jobForm" class="form two">
           <label class="full">
             Job to do
@@ -694,46 +310,6 @@
       </div>
     </section>
 
-    <section id="move" class="panel">
-      <div class="card form-card">
-        <h2>Move mob</h2>
-        <p class="small">Select the mob and the new paddock. Farms JTD will set the current paddock as the last paddock.</p>
-
-        <form id="moveForm" class="form">
-          <label>
-            Mob
-            <select id="moveMob" required></select>
-          </label>
-
-          <label>
-            New paddock
-            <select id="movePaddock" required></select>
-          </label>
-
-          <label>
-            Reason
-            <select id="moveReason">
-              <option>Feed</option>
-              <option>Rest paddock</option>
-              <option>Water</option>
-              <option>Animal health</option>
-              <option>Yard work</option>
-              <option>Break feeding</option>
-              <option>Weather risk</option>
-              <option>Other</option>
-            </select>
-          </label>
-
-          <button class="btn" type="submit">Record move</button>
-        </form>
-      </div>
-
-      <div class="card">
-        <h2>Recent moves</h2>
-        <div id="moveList" class="list"></div>
-      </div>
-    </section>
-
     <div class="bottom-actions">
       <div class="actions">
         <button id="demoBtn" class="btn secondary" type="button">Load demo</button>
@@ -747,678 +323,6 @@
     </div>
   </main>
 
-  <script>
-    const STORAGE_KEY = "farms_jtd_v1";
-
-    const state = loadState();
-
-    const tabs = document.querySelectorAll(".tab");
-    const panels = document.querySelectorAll(".panel");
-    const shortcutCards = document.querySelectorAll(".shortcut-card");
-
-    const todayDate = document.getElementById("todayDate");
-
-    const paddockForm = document.getElementById("paddockForm");
-    const mobForm = document.getElementById("mobForm");
-    const jobForm = document.getElementById("jobForm");
-    const moveForm = document.getElementById("moveForm");
-
-    const jobType = document.getElementById("jobType");
-    const jobLink = document.getElementById("jobLink");
-
-    const demoBtn = document.getElementById("demoBtn");
-    const printBtn = document.getElementById("printBtn");
-    const clearDoneBtn = document.getElementById("clearDoneBtn");
-    const resetBtn = document.getElementById("resetBtn");
-
-    todayDate.textContent = new Date().toLocaleDateString("en-NZ", {
-      weekday: "short",
-      day: "numeric",
-      month: "short"
-    });
-
-    function openTab(target) {
-      tabs.forEach((item) => item.classList.remove("active"));
-      panels.forEach((panel) => panel.classList.remove("active"));
-
-      const targetTab = document.querySelector(`.tab[data-tab="${target}"]`);
-      const targetPanel = document.getElementById(target);
-
-      if (!targetTab || !targetPanel) {
-        return;
-      }
-
-      targetTab.classList.add("active");
-      targetPanel.classList.add("active");
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    }
-
-    tabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        openTab(tab.dataset.tab);
-      });
-    });
-
-    shortcutCards.forEach((card) => {
-      card.addEventListener("click", () => {
-        openTab(card.dataset.openTab);
-      });
-    });
-
-    paddockForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      state.paddocks.push({
-        id: makeId(),
-        name: clean("paddockName"),
-        feed: value("paddockFeed"),
-        note: clean("paddockNote")
-      });
-
-      saveState();
-      paddockForm.reset();
-      render();
-    });
-
-    mobForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      state.mobs.push({
-        id: makeId(),
-        name: clean("mobName"),
-        type: value("mobType"),
-        number: Number(value("mobNumber")),
-        currentPaddock: value("mobCurrentPaddock"),
-        lastPaddock: value("mobLastPaddock") || "Not recorded",
-        nextPaddock: value("mobNextPaddock") || "Not set",
-        hardFed: value("mobHardFed"),
-        feedType: value("mobFeedType"),
-        note: clean("mobNote")
-      });
-
-      saveState();
-      mobForm.reset();
-      render();
-    });
-
-    jobForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      state.jobs.unshift({
-        id: makeId(),
-        title: clean("jobTitle"),
-        type: value("jobType"),
-        link: value("jobLink") || "Whole farm",
-        priority: value("jobPriority"),
-        status: value("jobStatus"),
-        category: value("jobCategory")
-      });
-
-      saveState();
-      jobForm.reset();
-      render();
-    });
-
-    moveForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      const mob = state.mobs.find((item) => item.id === value("moveMob"));
-      const newPaddock = value("movePaddock");
-
-      if (!mob || !newPaddock) {
-        return;
-      }
-
-      const oldPaddock = mob.currentPaddock || "Not recorded";
-
-      mob.lastPaddock = oldPaddock;
-      mob.currentPaddock = newPaddock;
-      mob.nextPaddock = "Not set";
-
-      state.moves.unshift({
-        id: makeId(),
-        mobName: mob.name,
-        from: oldPaddock,
-        to: newPaddock,
-        reason: value("moveReason"),
-        date: new Date().toLocaleDateString("en-NZ")
-      });
-
-      saveState();
-      moveForm.reset();
-      render();
-    });
-
-    jobType.addEventListener("change", renderJobLinks);
-
-    demoBtn.addEventListener("click", () => {
-      state.paddocks = [
-        {
-          id: makeId(),
-          name: "Back Flat",
-          feed: "Low",
-          note: "Needs a spell after next move."
-        },
-        {
-          id: makeId(),
-          name: "House Block",
-          feed: "Good",
-          note: "Close to yards."
-        },
-        {
-          id: makeId(),
-          name: "Creek 3",
-          feed: "Okay",
-          note: "Check trough."
-        },
-        {
-          id: makeId(),
-          name: "Hill 7",
-          feed: "Bare",
-          note: "Keep off until rain."
-        },
-        {
-          id: makeId(),
-          name: "Front Flat",
-          feed: "Good",
-          note: "Next for hoggets."
-        }
-      ];
-
-      state.mobs = [
-        {
-          id: makeId(),
-          name: "MA Ewes",
-          type: "Ewes",
-          number: 620,
-          currentPaddock: "Back Flat",
-          lastPaddock: "House Block",
-          nextPaddock: "Creek 3",
-          hardFed: "Yes",
-          feedType: "Baleage",
-          note: "2 bales today."
-        },
-        {
-          id: makeId(),
-          name: "Hoggets",
-          type: "Hoggets",
-          number: 410,
-          currentPaddock: "Creek 3",
-          lastPaddock: "Hill 7",
-          nextPaddock: "Front Flat",
-          hardFed: "No",
-          feedType: "None",
-          note: "Move tomorrow if feed tight."
-        },
-        {
-          id: makeId(),
-          name: "R2 Heifers",
-          type: "Heifers",
-          number: 86,
-          currentPaddock: "House Block",
-          lastPaddock: "Front Flat",
-          nextPaddock: "Not set",
-          hardFed: "No",
-          feedType: "None",
-          note: "Check water."
-        }
-      ];
-
-      state.jobs = [
-        {
-          id: makeId(),
-          title: "Check main water line",
-          type: "Whole farm",
-          link: "Whole farm",
-          priority: "Urgent",
-          status: "Open",
-          category: "Water"
-        },
-        {
-          id: makeId(),
-          title: "Fix trough",
-          type: "Paddock",
-          link: "Creek 3",
-          priority: "High",
-          status: "Open",
-          category: "Water"
-        },
-        {
-          id: makeId(),
-          title: "Hard feed MA Ewes",
-          type: "Mob",
-          link: "MA Ewes",
-          priority: "High",
-          status: "Open",
-          category: "Feed"
-        },
-        {
-          id: makeId(),
-          title: "Shift break fence",
-          type: "Paddock",
-          link: "Front Flat",
-          priority: "Normal",
-          status: "Open",
-          category: "Break feeding"
-        }
-      ];
-
-      state.moves = [
-        {
-          id: makeId(),
-          mobName: "MA Ewes",
-          from: "House Block",
-          to: "Back Flat",
-          reason: "Feed",
-          date: new Date().toLocaleDateString("en-NZ")
-        }
-      ];
-
-      saveState();
-      render();
-    });
-
-    printBtn.addEventListener("click", () => {
-      window.print();
-    });
-
-    clearDoneBtn.addEventListener("click", () => {
-      state.jobs = state.jobs.filter((job) => job.status !== "Done");
-      saveState();
-      render();
-    });
-
-    resetBtn.addEventListener("click", () => {
-      const confirmed = window.confirm("Reset Farms JTD and remove all saved local data?");
-
-      if (!confirmed) {
-        return;
-      }
-
-      state.paddocks = [];
-      state.mobs = [];
-      state.jobs = [];
-      state.moves = [];
-
-      saveState();
-      render();
-    });
-
-    function render() {
-      renderSelects();
-      renderToday();
-      renderPaddocks();
-      renderMobs();
-      renderJobs();
-      renderMoves();
-    }
-
-    function getOpenJobs() {
-      return state.jobs
-        .filter((job) => job.status !== "Done")
-        .sort((a, b) => priorityRank(b.priority) - priorityRank(a.priority));
-    }
-
-    function getTodayMobItems() {
-      return state.mobs.map((mob) => {
-        const attention = [];
-
-        if (mob.hardFed === "Yes") {
-          attention.push(`Hard fed: ${mob.feedType || "Feed"}`);
-        }
-
-        if (mob.nextPaddock && mob.nextPaddock !== "Not set") {
-          attention.push(`Next: ${mob.nextPaddock}`);
-        }
-
-        if (attention.length === 0) {
-          attention.push("On board");
-        }
-
-        return {
-          title: mob.name,
-          detail: `${mob.number} ${mob.type} · Now: ${mob.currentPaddock || "Not set"}`,
-          note: `Last: ${mob.lastPaddock || "Not recorded"} · ${attention.join(" · ")}`,
-          pill: mob.hardFed === "Yes" ? "Feed" : "Mob",
-          pillClass: mob.hardFed === "Yes" ? "feed" : ""
-        };
-      });
-    }
-
-    function getTodayPaddockItems() {
-      return state.paddocks.map((paddock) => {
-        return {
-          title: paddock.name,
-          detail: paddock.note || "No note",
-          note: "",
-          pill: paddock.feed,
-          pillClass: feedClass(paddock.feed)
-        };
-      });
-    }
-
-    function getTodayMoveItems() {
-      return state.moves.map((move) => {
-        return {
-          title: move.mobName,
-          detail: `${move.from} → ${move.to}`,
-          note: move.date,
-          pill: move.reason,
-          pillClass: ""
-        };
-      });
-    }
-
-    function renderToday() {
-      const todayMobItems = getTodayMobItems();
-      const todayPaddockItems = getTodayPaddockItems();
-      const todayMoveItems = getTodayMoveItems();
-      const todayJobItems = getOpenJobs();
-
-      text("statMobsJtd", todayMobItems.length);
-      text("statPaddocksJtd", todayPaddockItems.length);
-      text("statMoveJtd", todayMoveItems.length);
-      text("statJobsJtd", todayJobItems.length);
-
-      renderSimpleItems("todayMobs", todayMobItems, "No mobs added yet.");
-      renderSimpleItems("todayPaddocks", todayPaddockItems, "No paddocks added yet.");
-      renderSimpleItems("todayMoves", todayMoveItems, "No moves recorded yet.");
-      renderJobItems("todayJobs", todayJobItems, true);
-    }
-
-    function renderPaddocks() {
-      renderPaddockItems("paddockList", state.paddocks, false);
-    }
-
-    function renderMobs() {
-      renderMobItems("mobList", state.mobs, false);
-    }
-
-    function renderJobs() {
-      renderJobItems("jobList", state.jobs, false);
-    }
-
-    function renderMoves() {
-      const target = document.getElementById("moveList");
-
-      if (state.moves.length === 0) {
-        target.innerHTML = empty("No moves recorded yet.");
-        return;
-      }
-
-      target.innerHTML = state.moves.map((move) => `
-        <div class="item">
-          <div class="item-head">
-            <div>
-              <div class="item-title">${escapeHtml(move.mobName)}</div>
-              <div class="meta">${escapeHtml(move.from)} → ${escapeHtml(move.to)}</div>
-            </div>
-            <span class="pill">${escapeHtml(move.reason)}</span>
-          </div>
-          <div class="meta">${escapeHtml(move.date)}</div>
-        </div>
-      `).join("");
-    }
-
-    function renderSimpleItems(targetId, items, emptyMessage) {
-      const target = document.getElementById(targetId);
-
-      if (items.length === 0) {
-        target.innerHTML = empty(emptyMessage);
-        return;
-      }
-
-      target.innerHTML = items.map((item) => `
-        <div class="item">
-          <div class="item-head">
-            <div>
-              <div class="item-title">${escapeHtml(item.title)}</div>
-              <div class="meta">${escapeHtml(item.detail)}</div>
-            </div>
-            <span class="pill ${escapeHtml(item.pillClass)}">${escapeHtml(item.pill)}</span>
-          </div>
-          ${item.note ? `<div class="meta">${escapeHtml(item.note)}</div>` : ""}
-        </div>
-      `).join("");
-    }
-
-    function renderPaddockItems(targetId, paddocks, compact) {
-      const target = document.getElementById(targetId);
-
-      if (paddocks.length === 0) {
-        target.innerHTML = empty(compact ? "No low feed paddocks showing." : "No paddocks added yet.");
-        return;
-      }
-
-      target.innerHTML = paddocks.map((paddock) => `
-        <div class="item">
-          <div class="item-head">
-            <div>
-              <div class="item-title">${escapeHtml(paddock.name)}</div>
-              <div class="meta">${escapeHtml(paddock.note || "No note")}</div>
-            </div>
-            <span class="pill ${feedClass(paddock.feed)}">${escapeHtml(paddock.feed)}</span>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function renderMobItems(targetId, mobs, compact) {
-      const target = document.getElementById(targetId);
-
-      if (mobs.length === 0) {
-        target.innerHTML = empty(compact ? "No mobs needing attention." : "No mobs added yet.");
-        return;
-      }
-
-      target.innerHTML = mobs.map((mob) => `
-        <div class="item">
-          <div class="item-head">
-            <div>
-              <div class="item-title">${escapeHtml(mob.name)} · ${escapeHtml(String(mob.number))} ${escapeHtml(mob.type)}</div>
-              <div class="meta">
-                Now: ${escapeHtml(mob.currentPaddock || "Not set")}<br />
-                Last: ${escapeHtml(mob.lastPaddock || "Not recorded")} · Next: ${escapeHtml(mob.nextPaddock || "Not set")}<br />
-                Hard fed: ${escapeHtml(mob.hardFed)} · Feed: ${escapeHtml(mob.feedType || "None")}
-              </div>
-            </div>
-            <span class="pill ${mob.hardFed === "Yes" ? "feed" : ""}">${escapeHtml(mob.hardFed === "Yes" ? "Feed" : "Watch")}</span>
-          </div>
-          ${mob.note ? `<div class="meta">${escapeHtml(mob.note)}</div>` : ""}
-        </div>
-      `).join("");
-    }
-
-    function renderJobItems(targetId, jobs, compact) {
-      const target = document.getElementById(targetId);
-
-      if (jobs.length === 0) {
-        target.innerHTML = empty(compact ? "No open jobs showing." : "No jobs added yet.");
-        return;
-      }
-
-      target.innerHTML = jobs.map((job) => `
-        <div class="item">
-          <div class="item-head">
-            <div>
-              <div class="item-title">${escapeHtml(job.title)}</div>
-              <div class="meta">
-                ${escapeHtml(job.type)} · ${escapeHtml(job.link)} · ${escapeHtml(job.category)}
-              </div>
-            </div>
-            <span class="pill ${job.status === "Done" ? "done" : priorityClass(job.priority)}">${escapeHtml(job.status === "Done" ? "Done" : job.priority)}</span>
-          </div>
-          ${job.status !== "Done" ? `
-            <div class="actions">
-              <button class="btn secondary small-btn" type="button" onclick="markJobDone('${job.id}')">Mark done</button>
-              <button class="btn danger small-btn" type="button" onclick="deleteJob('${job.id}')">Delete</button>
-            </div>
-          ` : `
-            <div class="actions">
-              <button class="btn danger small-btn" type="button" onclick="deleteJob('${job.id}')">Delete</button>
-            </div>
-          `}
-        </div>
-      `).join("");
-    }
-
-    function renderSelects() {
-      fillPaddockSelect("mobCurrentPaddock", true);
-      fillPaddockSelect("mobLastPaddock", false);
-      fillPaddockSelect("mobNextPaddock", false);
-      fillPaddockSelect("movePaddock", true);
-      fillMobSelect("moveMob", true);
-      renderJobLinks();
-    }
-
-    function renderJobLinks() {
-      const selectedType = value("jobType");
-      let options = "";
-
-      if (selectedType === "Whole farm") {
-        options = `<option>Whole farm</option>`;
-      }
-
-      if (selectedType === "Paddock") {
-        options = state.paddocks.length
-          ? state.paddocks.map((paddock) => `<option>${escapeHtml(paddock.name)}</option>`).join("")
-          : `<option>No paddocks yet</option>`;
-      }
-
-      if (selectedType === "Mob") {
-        options = state.mobs.length
-          ? state.mobs.map((mob) => `<option>${escapeHtml(mob.name)}</option>`).join("")
-          : `<option>No mobs yet</option>`;
-      }
-
-      jobLink.innerHTML = options;
-    }
-
-    function fillPaddockSelect(id, required) {
-      const select = document.getElementById(id);
-      const first = required ? `<option value="">Choose paddock</option>` : `<option value="">Not set</option>`;
-
-      select.innerHTML = first + state.paddocks.map((paddock) => {
-        return `<option>${escapeHtml(paddock.name)}</option>`;
-      }).join("");
-    }
-
-    function fillMobSelect(id, required) {
-      const select = document.getElementById(id);
-      const first = required ? `<option value="">Choose mob</option>` : `<option value="">Not set</option>`;
-
-      select.innerHTML = first + state.mobs.map((mob) => {
-        return `<option value="${escapeHtml(mob.id)}">${escapeHtml(mob.name)}</option>`;
-      }).join("");
-    }
-
-    function markJobDone(id) {
-      const job = state.jobs.find((item) => item.id === id);
-
-      if (!job) {
-        return;
-      }
-
-      job.status = "Done";
-      saveState();
-      render();
-    }
-
-    function deleteJob(id) {
-      state.jobs = state.jobs.filter((job) => job.id !== id);
-      saveState();
-      render();
-    }
-
-    function loadState() {
-      const fallback = {
-        paddocks: [],
-        mobs: [],
-        jobs: [],
-        moves: []
-      };
-
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-
-        if (!saved) {
-          return fallback;
-        }
-
-        const parsed = JSON.parse(saved);
-
-        return {
-          paddocks: Array.isArray(parsed.paddocks) ? parsed.paddocks : [],
-          mobs: Array.isArray(parsed.mobs) ? parsed.mobs : [],
-          jobs: Array.isArray(parsed.jobs) ? parsed.jobs : [],
-          moves: Array.isArray(parsed.moves) ? parsed.moves : []
-        };
-      } catch (error) {
-        return fallback;
-      }
-    }
-
-    function saveState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    }
-
-    function value(id) {
-      return document.getElementById(id).value;
-    }
-
-    function clean(id) {
-      return value(id).trim();
-    }
-
-    function text(id, content) {
-      document.getElementById(id).textContent = content;
-    }
-
-    function makeId() {
-      return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-    }
-
-    function empty(message) {
-      return `<div class="empty">${escapeHtml(message)}</div>`;
-    }
-
-    function feedClass(feed) {
-      if (feed === "Good") return "good";
-      if (feed === "Okay") return "okay";
-      if (feed === "Low") return "low";
-      if (feed === "Bare") return "bare";
-      return "";
-    }
-
-    function priorityClass(priority) {
-      if (priority === "Urgent") return "urgent";
-      if (priority === "High") return "high";
-      return "";
-    }
-
-    function priorityRank(priority) {
-      if (priority === "Urgent") return 3;
-      if (priority === "High") return 2;
-      return 1;
-    }
-
-    function escapeHtml(valueToEscape) {
-      return String(valueToEscape)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    window.markJobDone = markJobDone;
-    window.deleteJob = deleteJob;
-
-    render();
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
